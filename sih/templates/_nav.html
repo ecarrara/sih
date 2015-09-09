@@ -1,0 +1,15 @@
+{% macro render_menu(menu, modifiers=['stacked', 'pills']) %}
+<ul class="nav{% for modifier in modifiers %} nav-{{ modifier }}{% endfor %}">
+    {% for endpoint, name in menu %}
+        {% if endpoint == '-' %}
+            <li class="divider"></li>
+        {% else %}
+            {% with url = url_for(endpoint) %}
+                <li{% if endpoint.split('_')[0] == request.endpoint.split('_')[0] %} class="active"{% endif %}>
+                    <a href="{{ url }}">{{ name }}</a>
+                </li>
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endmacro %}

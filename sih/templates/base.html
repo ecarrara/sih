@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ page_title }} | {{ config.APPLICATION_NAME }}</title>
+
+    {% assets 'stylesheets' -%}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
+    {%- endassets %}
+</head>
+<body>
+    {% block body %}
+        {% include 'partials/topnav.html' %}
+        {% include 'partials/sidebar.html' %}
+
+       <div id="main-content">
+            <div class="container-fluid">
+                {% include 'partials/messages.html' %}
+
+                {% block main %}
+                    <div class="page-title">
+                        <h1 class="page-title">{{ page_title }}</h1>
+                    </div>
+                {% endblock %}
+            </div>
+        </div> 
+    {% endblock %}
+
+    {% block js -%}
+        {%- if config.DEBUG %}
+            <script type="text/javascript" src="{{ url_for('static', filename='lib/requirejs/require.js') }}" data-main="/static/app/main.js"></script>
+        {%- else -%}
+            {% assets 'javascripts' -%}
+                <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+            {%- endassets %}
+        {%- endif %}
+    {%- endblock %}
+</body>
+</html>

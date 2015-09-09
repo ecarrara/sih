@@ -1,0 +1,13 @@
+stylesheets:
+  filters: less
+  output: gen/all.css
+  contents:
+    - app/styles/main.less
+
+javascripts:
+  filters: requirejs
+  output: gen/all.js
+  options:
+    config: config.rjs
+  contents:
+      - app/main.js

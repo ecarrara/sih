@@ -1,0 +1,12 @@
+({
+    paths: {
+        jquery: 'lib/jquery/dist/jquery',
+        bootstrap: 'lib/bootstrap/dist/js/bootstrap'
+    },
+    shim: {
+        bootstrap: ['jquery']
+    },
+    name: "app/main",
+    out: "gen/all.js",
+    include: "lib/requirejs/require"
+})
