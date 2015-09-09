@@ -1,0 +1,52 @@
+#topnav {
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 1px 2px fade(@sidebar-bgcolor, 20%);
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 500;
+    top: 0;
+
+    .navbar-brand {
+        text-align: center;
+        width: @sidebar-width;
+        background-color: @brand-color;
+        color: @sidebar-color;
+        margin: 0 !important;
+        font-weight: bold;
+
+        img {
+            display: inline-block;
+        }
+    }
+
+    .user-info {
+        float: right;
+        padding: 15px 30px;
+        background: #fafafa;
+
+        .user-name {
+            font-weight: bold;
+            margin: 0;
+        }
+    }
+
+    .actions {
+        margin-right: 5px;
+
+        a {
+            display: inline-block;
+            padding: 19px;
+            color: #111;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #fafafa;
+            }
+        }
+    }
+}
+
