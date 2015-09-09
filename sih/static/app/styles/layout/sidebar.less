@@ -1,0 +1,73 @@
+#sidebar {
+    width: @sidebar-width;
+    background: @sidebar-bgcolor;
+    height: calc(~'100% - '@navbar-height);
+    position: fixed;
+    top: @navbar-height;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    hr {
+        border-top: 1px dashed lighten(@sidebar-bgcolor, 10%);
+        margin: 6px 10px;
+    }
+
+    .section {
+        margin: 0;
+        padding: 12px 16px 12px 8px;
+        margin-top: 5px;
+        color: lighten(@sidebar-bgcolor, 60%);
+        font-size: 12px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.5s ease;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .icon {
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .toggle {
+            float: right;
+            transition: transform 0.3s ease;
+        }
+
+        &.active {
+            .toggle {
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    .nav {
+        li {
+            a {
+                color: lighten(@sidebar-bgcolor, 60%);
+                font-size: 12px;
+                transition: background-color 0.5s ease;
+
+                &.active,
+                &:focus,
+                &:hover {
+                    background-color: darken(@sidebar-bgcolor, 5%);
+                }
+            }
+        }
+    }
+}

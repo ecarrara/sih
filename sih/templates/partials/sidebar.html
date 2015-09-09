@@ -1,0 +1,23 @@
+{% import '_nav.html' as _nav %}
+
+<aside id="sidebar">
+    {% with menu = [
+        ('Menu', 'fa fa-home', [
+            ('Home', 'home'),
+        ]),
+    ] %}
+
+        {% for name, classes, submenu in menu %}
+            <h5 class="section">
+                <i class="icon {{ classes }}"></i>
+                {{ name }} <i class="toggle fa fa-caret-down"></i>
+            </h5>
+
+            <ul class="nav">
+                {% for name, endpoint in submenu %}
+                    <li><a{% if endpoint.split('_')[0] == request.endpoint.split('_')[0] %} class="active"{% endif %} href="{{ url_for(endpoint) }}">{{ name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endwith %}
+</aside>
