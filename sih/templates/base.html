@@ -12,6 +12,16 @@
     {% block body %}
         {% include 'partials/topnav.html' %}
         {% include 'partials/sidebar.html' %}
+
+       <div id="main-content">
+            <div class="container-fluid">
+                {% block main %}
+                    <div class="page-title">
+                        <h1 class="page-title">{{ page_title }}</h1>
+                    </div>
+                {% endblock %}
+            </div>
+        </div> 
     {% endblock %}
 
     {% block js -%}
