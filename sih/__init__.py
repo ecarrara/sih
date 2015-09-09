@@ -6,8 +6,8 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
-from flask import Flask
-from sih.extensions import db, migrate
+from flask import Flask, render_template
+from sih.extensions import db, migrate, assets
 
 
 def create_app(config=None):
@@ -23,9 +23,16 @@ def create_app(config=None):
     def home():
         return 'The lunatic is in my head'
 
+    @app.route('/__ui')
+    def ui():
+        return render_template('ui.html')
+
     return app
 
 
 def configure_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db)
+
+    assets.init_app(app)
+    assets.from_yaml(app.config['ASSETS'])

@@ -11,7 +11,10 @@ from os import getenv
 
 class BaseConfig(object):
 
+    APPLICATION_NAME = 'SIH'
+
     SQLALCHEMY_DATABASE_URI = getenv('DATABASE_URI', 'postgresql:///sih')
+    ASSETS = 'sih/assets.yml'
 
 
 class DevelopmentConfig(BaseConfig):

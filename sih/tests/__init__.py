@@ -9,12 +9,13 @@
 from flask_testing import TestCase
 from sih import create_app
 from sih.config import TestingConfig
-from sih.extensions import db
+from sih.extensions import db, assets
 
 
 class TestCase(TestCase):
 
     def create_app(self):
+        assets._named_bundles = {}
         app = create_app(TestingConfig())
         return app
 
