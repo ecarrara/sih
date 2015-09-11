@@ -38,6 +38,20 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    def get_id(self):
+        return unicode(self.id)
+
+    @property
+    def is_authenticated(self):
+        return self.is_active
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    @property
+    def is_active(self):
+        return self.status == 'active'
 
 # generate password hash
 listen(User.password, 'set', lambda t, v, o, i: generate_password_hash(v),

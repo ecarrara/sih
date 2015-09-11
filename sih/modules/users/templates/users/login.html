@@ -1,0 +1,24 @@
+{% import '_form.html' as _f %}
+{% extends 'base.html' %}
+
+{% set page_title = 'Entrar' %}
+
+{% block body %}
+    <form id="login-form" class="panel panel-default" action="{{ url_for('users.login') }}" method="post">
+        <div class="panel-heading">
+            Entrar
+        </div>
+        <div class="panel-body">
+            {% for category, message in get_flashed_messages(with_categories=True) %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+
+            {{ _f.render_field(form.csrf_token) }}
+            {{ _f.render_field(form.username) }}
+            {{ _f.render_field(form.password) }}
+        </div>
+        <div class="panel-footer text-right">
+            <button class="btn btn-success" type="submit">Entrar</button>
+        </div>
+    </form>
+{% endblock %}
