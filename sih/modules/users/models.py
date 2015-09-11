@@ -7,7 +7,9 @@
 """
 
 from datetime import datetime
+from sqlalchemy.event import listen
 from sqlalchemy.dialects.postgresql import ARRAY
+from werkzeug.security import generate_password_hash, check_password_hash
 from sih.extensions import db
 
 
@@ -32,3 +34,11 @@ class User(db.Model):
     created_at = db.Column(db.DateTime(timezone=True),
                            default=datetime.utcnow, nullable=False)
     last_login = db.Column(db.DateTime(timezone=True), nullable=True)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+
+# generate password hash
+listen(User.password, 'set', lambda t, v, o, i: generate_password_hash(v),
+       retval=True)
