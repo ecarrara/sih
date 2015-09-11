@@ -7,8 +7,9 @@
 """
 
 from flask import Flask, render_template
-from sih.extensions import db, migrate, assets
+from sih.extensions import db, migrate, assets, login_manager
 from sih.modules import users
+from sih.modules.users.models import User
 
 
 def create_app(config=None):
@@ -38,6 +39,15 @@ def configure_extensions(app):
 
     assets.init_app(app)
     assets.from_yaml(app.config['ASSETS'])
+
+    login_manager.init_app(app)
+    login_manager.login_view = 'users.login'
+    login_manager.login_message = u'Por favor faça login.'
+    login_manager.login_message_category = 'info'
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.filter(User.id == user_id).first()
 
 
 def register_modules(app):
