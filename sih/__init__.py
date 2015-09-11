@@ -7,7 +7,7 @@
 """
 
 from flask import Flask, render_template
-from sih.extensions import db, migrate, assets, login_manager
+from sih.extensions import db, migrate, assets, login_manager, babel
 from sih.modules import users
 from sih.modules.users.models import User
 
@@ -48,6 +48,8 @@ def configure_extensions(app):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.filter(User.id == user_id).first()
+
+    babel.init_app(app)
 
 
 def register_modules(app):

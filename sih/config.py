@@ -16,6 +16,11 @@ class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = getenv('DATABASE_URI', 'postgresql:///sih')
     ASSETS = 'sih/assets.yml'
 
+    BABEL_DEFAULT_LOCALE = 'pt_BR'
+    BABEL_DEFAULT_TIMEZONE = 'America/Sao_Paulo'
+
+    SECRET_KEY = 'You fritter and waste the hours in an offhand way'
+
 
 class DevelopmentConfig(BaseConfig):
 
@@ -27,3 +32,5 @@ class TestingConfig(BaseConfig):
 
     TESTING = True
     SQLALCHEMY_DATABASE_URI = getenv('DATABASE_URI', 'postgresql:///sih_test')
+
+    WTF_CSRF_ENABLED = False
