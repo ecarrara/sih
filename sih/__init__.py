@@ -8,6 +8,7 @@
 
 from flask import Flask, render_template
 from sih.extensions import db, migrate, assets
+from sih.modules import users
 
 
 def create_app(config=None):
@@ -18,6 +19,7 @@ def create_app(config=None):
     app.config.from_envvar('SIH_CONFIG', silent=True)
 
     configure_extensions(app)
+    register_modules(app)
 
     @app.route('/')
     def home():
@@ -36,3 +38,7 @@ def configure_extensions(app):
 
     assets.init_app(app)
     assets.from_yaml(app.config['ASSETS'])
+
+
+def register_modules(app):
+    app.register_blueprint(users, url_prefix='/users')
