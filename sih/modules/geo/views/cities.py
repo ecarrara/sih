@@ -78,4 +78,11 @@ def cities_edit(city_id):
 @login_required
 @role_required(['admin'])
 def cities_delete(city_id):
-    raise NotImplementedError()
+    city = City.query.filter(City.id == city_id).first_or_404()
+
+    db.session.delete(city)
+    db.session.commit()
+
+    flash(u'Cidade excluída com sucesso.', 'success')
+
+    return redirect(url_for('geo.cities_list'))
