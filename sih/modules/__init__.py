@@ -7,6 +7,7 @@
 """
 
 from sih.modules.users import users
+from sih.modules.stations import stations
 
 
-__all__ = ['users']
+__all__ = ['users', 'stations']
