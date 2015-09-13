@@ -53,7 +53,21 @@ def sources_view(source_id):
 @login_required
 @role_required(['admin'])
 def sources_edit(source_id):
-    raise NotImplementedError()
+    source = Source.query.filter(Source.id == source_id).first_or_404()
+    form = SourceForm(obj=source)
+
+    if form.validate_on_submit():
+        form.populate_obj(source)
+
+        db.session.add(source)
+        db.session.commit()
+
+        flash(u'Fonte de dados editada com sucesso.', 'success')
+
+        return redirect(url_for('stations.sources_list'))
+
+    return render_template('stations/sources/edit.html',
+                           form=form, source=source)
 
 
 @stations.route('/sources/<int:source_id>/delete', methods=['POST'])
