@@ -1,0 +1,54 @@
+{% import '_pag.html' as _pag %}
+{% extends 'base.html' %}
+
+{% set page_title = 'Cidades' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="actions-buttons">
+        <a href="{{ url_for('geo.cities_create') }}" class="btn btn-default">
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="80">Cod.</th>
+                        <th>Nome</th>
+                        <th>Estado</th>
+                        <th width="80"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for city in cities.items %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('geo.cities_view', city_id=city.id) }}">{{ city.id }}</a>
+                            </td>
+                            <td>{{ city.name }}</td>
+                            <td>{{ city.state }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('geo.cities_delete', city_id=city.id) }}">
+                                    <a href="{{ url_for('geo.cities_edit', city_id=city.id) }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <button type="submit" class="btn btn-default btn-xs" data-confirm="Deseja excluír {{ city.name }}?">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {{ _pag.render_pagination(cities, 'geo.cities_list') }}
+
+        </div>
+    </div>
+{% endblock %}

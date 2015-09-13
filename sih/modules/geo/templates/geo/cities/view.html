@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Cidade: ' + (city|string) %}
+
+{% block main %}
+    {{ super() }}
+
+    <form method="post" action="{{ url_for('geo.cities_delete', city_id=city.id) }}" class="actions-buttons btn-group">
+        <a href="{{ url_for('geo.cities_list') }}" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <a href="{{ url_for('geo.cities_edit', city_id=city.id) }}" class="btn btn-default">
+            <i class="fa fa-search"></i>
+        </a>
+        <button type="submit" class="btn btn-danger" data-confirm="Excluír {{ city.name }}?">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% if city.boundary is not none %}
+                <div class="map medium" data-map data-features='{ "type": "FeatureCollection", "features": [{{ city.boundary_shape|tojson }}] }' data-center='{{ city.center_shape|tojson }}'></div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% import '_form.html' as _f %}
+
+{{ _f.render_field(form.csrf_token) }}
+
+<div class="row">
+    {{ _f.render_field(form.id, class='col-md-3') }}
+    {{ _f.render_field(form.name, class='col-md-6') }}
+    {{ _f.render_field(form.state, class='col-md-3') }}
+</div>
+
+<div class="row">
+    {{ _f.render_field(form.boundary, class='col-md-12') }}
+</div>
