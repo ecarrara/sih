@@ -74,4 +74,11 @@ def sensors_edit(sensor_id):
 @login_required
 @role_required(['admin'])
 def sensors_delete(sensor_id):
-    raise NotImplementedError()
+    sensor = Sensor.query.filter(Sensor.id == sensor_id).first_or_404()
+
+    db.session.delete(sensor)
+    db.session.commit()
+
+    flash(u'Sensor excluído com sucesso.', 'success')
+
+    return redirect(url_for('stations.sensors_list'))
