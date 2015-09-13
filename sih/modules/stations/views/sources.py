@@ -46,7 +46,8 @@ def sources_create():
 @login_required
 @role_required(['admin'])
 def sources_view(source_id):
-    raise NotImplementedError()
+    source = Source.query.filter(Source.id == source_id).first_or_404()
+    return render_template('stations/sources/view.html', source=source)
 
 
 @stations.route('/sources/<int:source_id>/edit', methods=['GET', 'POST'])
