@@ -58,7 +58,20 @@ def cities_view(city_id):
 @login_required
 @role_required(['admin'])
 def cities_edit(city_id):
-    raise NotImplementedError()
+    city = City.query.filter(City.id == city_id).first_or_404()
+
+    form = CityForm(obj=city)
+    if form.validate_on_submit():
+        form.populate_obj(city)
+
+        db.session.add(city)
+        db.session.commit()
+
+        flash(u'Cidade editada com sucesso.', 'success')
+
+        return redirect(url_for('geo.cities_view', city_id=city.id))
+
+    return render_template('geo/cities/edit.html', city=city, form=form)
 
 
 @geo.route('/cities/<int:city_id>/delete', methods=['POST'])
