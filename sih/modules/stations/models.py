@@ -18,3 +18,15 @@ class Source(db.Model):
     name = db.Column(db.String(64), nullable=False)
     url = db.Column(db.String(255), nullable=True)
     license = db.Column(db.String(64), nullable=True)
+
+
+class Sensor(db.Model):
+
+    __tablename__ = 'sensors'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), nullable=False)
+    identifier = db.Column(db.String(32), nullable=False, unique=True)
+    measure_unit = db.Column(db.String(32), nullable=False)
+    validate_code = db.Column(db.Text, nullable=True)
+    process_code = db.Column(db.Text, nullable=True)
