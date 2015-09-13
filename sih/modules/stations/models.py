@@ -30,3 +30,33 @@ class Sensor(db.Model):
     measure_unit = db.Column(db.String(32), nullable=False)
     validate_code = db.Column(db.Text, nullable=True)
     process_code = db.Column(db.Text, nullable=True)
+
+    def _run_code(self, code, scope=None):
+        code = compile(code, filename='<string>', mode='exec')
+
+        ctx = {}
+        if scope is not None:
+            ctx.update(scope)
+
+        eval(code, {'__builtins__': {}}, ctx)
+        return ctx
+
+    def validate_data(self, value):
+        if not self.validate_code:
+            return True
+
+        ctx = self._run_code(self.validate_code, {'value': value})
+        return bool(ctx.get('result'))
+
+    def process_data(self, value, station=None, data=None):
+        if not self.process_code:
+            return value
+
+        ctx = self._run_code(self.process_code, {
+            'value': value,
+            'station': station,
+            'data': data
+        })
+
+        result = ctx.get('result')
+        return int(result) if result is not None else None

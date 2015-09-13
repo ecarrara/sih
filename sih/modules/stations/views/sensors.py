@@ -6,7 +6,7 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
-from flask import render_template, flash, url_for, redirect
+from flask import render_template, flash, url_for, redirect, request
 from flask_login import login_required
 from sih.extensions import db
 from sih.permissions import role_required
@@ -42,11 +42,35 @@ def sensors_create():
     return render_template('stations/sensors/create.html', form=form)
 
 
-@stations.route('/sensors/<int:sensor_id>')
+@stations.route('/sensors/<int:sensor_id>', methods=['GET', 'POST'])
 @login_required
 @role_required(['admin'])
 def sensors_view(sensor_id):
-    raise NotImplementedError()
+    sensor = Sensor.query.filter(Sensor.id == sensor_id).first_or_404()
+
+    user_input = request.form.get('input', None, type=int)
+    validate_output = None
+    validate_error = None
+    process_output = None
+    process_error = None
+
+    if user_input:
+        try:
+            validate_output = sensor.validate_data(user_input)
+        except Exception as e:
+            validate_error = str(e)
+
+        try:
+            process_output = sensor.process_data(user_input)
+        except Exception as e:
+            process_error = str(e)
+
+    return render_template('stations/sensors/view.html', sensor=sensor,
+                           validate_output=validate_output,
+                           validate_error=validate_error,
+                           process_output=process_output,
+                           process_error=process_error,
+                           user_input=user_input)
 
 
 @stations.route('/sensors/<int:sensor_id>/edit', methods=['GET', 'POST'])
