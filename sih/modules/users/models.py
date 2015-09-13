@@ -39,7 +39,7 @@ class User(db.Model):
         return check_password_hash(self.password, password)
 
     def get_id(self):
-        return unicode(self.id)
+        return str(self.id)
 
     @property
     def is_authenticated(self):
