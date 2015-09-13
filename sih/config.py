@@ -34,3 +34,4 @@ class TestingConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = getenv('DATABASE_URI', 'postgresql:///sih_test')
 
     WTF_CSRF_ENABLED = False
+    LOGIN_DISABLED = True

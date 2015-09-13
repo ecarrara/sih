@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Fontes de Dados' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="actions-buttons">
+        <a href="{{ url_for('stations.sources_create') }}" class="btn btn-default">
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Identificador</th>
+                        <th>URL</th>
+                        <th>Licença</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for source in sources %}
+                        <tr>
+                            <td>{{ source.id }}</td>
+                            <td>
+                                <a href="{{ url_for('stations.sources_view', source_id=source.id) }}">{{ source.name }}</a>
+                            </td>
+                            <td>{{ source.identifier }}</td>
+                            <td><a href="{{ source.url }}">{{ source.url }}</a></td>
+                            <td>{{ source.license or '' }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('stations.sources_delete', source_id=source.id) }}" >
+                                    <a href="{{ url_for('stations.sources_edit', source_id=source.id) }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-default btn-xs" type="submit" data-confirm="Deseja excluír {{ source.name }}?">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
