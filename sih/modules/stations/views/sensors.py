@@ -53,7 +53,21 @@ def sensors_view(sensor_id):
 @login_required
 @role_required(['admin'])
 def sensors_edit(sensor_id):
-    raise NotImplementedError()
+    sensor = Sensor.query.filter(Sensor.id == sensor_id).first_or_404()
+    form = SensorForm(obj=sensor)
+
+    if form.validate_on_submit():
+        form.populate_obj(sensor)
+
+        db.session.add(sensor)
+        db.session.commit()
+
+        flash(u'Sensor editado com sucesso.', 'success')
+
+        return redirect(url_for('stations.sensors_list'))
+
+    return render_template('stations/sensors/edit.html',
+                           form=form, sensor=sensor)
 
 
 @stations.route('/sensors/<int:sensor_id>/delete', methods=['POST'])
