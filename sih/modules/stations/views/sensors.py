@@ -6,11 +6,13 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
-from flask import render_template
+from flask import render_template, flash, url_for, redirect
 from flask_login import login_required
+from sih.extensions import db
 from sih.permissions import role_required
 from sih.modules.stations import stations
 from sih.modules.stations.models import Sensor
+from sih.modules.stations.forms import SensorForm
 
 
 @stations.route('/sensors')
@@ -25,7 +27,19 @@ def sensors_list():
 @login_required
 @role_required(['admin'])
 def sensors_create():
-    raise NotImplementedError()
+    form = SensorForm()
+    if form.validate_on_submit():
+        sensor = Sensor()
+        form.populate_obj(sensor)
+
+        db.session.add(sensor)
+        db.session.commit()
+
+        flash(u'Sensor cadastrado com sucesso.', 'success')
+
+        return redirect(url_for('stations.sensors_list'))
+
+    return render_template('stations/sensors/create.html', form=form)
 
 
 @stations.route('/sensors/<int:sensor_id>')
