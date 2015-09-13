@@ -6,13 +6,18 @@ python:
 addons:
   postgresql: "9.4"
 
+cache:
+  directories:
+    - $HOME/.pip-cache
+    - $HOME/.bower-cache
+
 before_script:
   - psql -U postgres -c "create database sih_test;"
   - psql -U postgres -c "create extension postgis;" sih_test
-  - bower install
+  - bower install --config.storage.cache=$HOME/.bower-cache
 
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements.txt --cache-dir $HOME/.pip-cache
   - npm install -g less requirejs bower
 
 script: 
