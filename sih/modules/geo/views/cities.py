@@ -51,7 +51,8 @@ def cities_create():
 @login_required
 @role_required(['admin'])
 def cities_view(city_id):
-    raise NotImplementedError()
+    city = City.query.filter(City.id == city_id).first_or_404()
+    return render_template('geo/cities/view.html', city=city)
 
 
 @geo.route('/cities/<int:city_id>/edit', methods=['GET', 'POST'])

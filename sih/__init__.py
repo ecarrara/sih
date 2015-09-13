@@ -7,6 +7,7 @@
 """
 
 from flask import Flask, render_template
+from sih.json import JSONEncoder
 from sih.extensions import db, migrate, assets, login_manager, babel
 from sih.modules import users, stations, geo
 from sih.modules.users.models import User
@@ -18,6 +19,8 @@ def create_app(config=None):
 
     app.config.from_object(config)
     app.config.from_envvar('SIH_CONFIG', silent=True)
+
+    app.json_encoder = JSONEncoder
 
     configure_extensions(app)
     register_modules(app)

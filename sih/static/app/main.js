@@ -19,6 +19,7 @@ require.config({
 require([
     'jquery',
     'app/misc/confirm',
+    'app/geo/map',
     'app/geo/editor',
     'bootstrap',
 ], function ($) {
