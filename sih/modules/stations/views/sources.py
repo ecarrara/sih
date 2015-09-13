@@ -74,4 +74,11 @@ def sources_edit(source_id):
 @login_required
 @role_required(['admin'])
 def sources_delete(source_id):
-    raise NotImplementedError()
+    source = Source.query.filter(Source.id == source_id).first_or_404()
+
+    db.session.delete(source)
+    db.session.commit()
+
+    flash(u'Fonte de dados excluída com sucesso.', 'success')
+
+    return redirect(url_for('stations.sources_list'))
