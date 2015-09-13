@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Cadastrar Fonte de Dados' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="actions-buttons btn-group">
+        <a class="btn btn-default" href="{{ url_for('stations.sources_list') }}">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <form method="post" action="{{ url_for('stations.sources_create') }}" class="panel panel-default">
+        <div class="panel-body">
+            {% include 'stations/sources/_form.html' %}
+        </div>
+        <div class="panel-footer text-right">
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </div>
+    </form>
+
+{% endblock %}

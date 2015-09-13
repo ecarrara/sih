@@ -8,7 +8,7 @@
 
 from flask import Flask, render_template
 from sih.extensions import db, migrate, assets, login_manager, babel
-from sih.modules import users
+from sih.modules import users, stations
 from sih.modules.users.models import User
 
 
@@ -54,3 +54,4 @@ def configure_extensions(app):
 
 def register_modules(app):
     app.register_blueprint(users, url_prefix='/users')
+    app.register_blueprint(stations, url_prefix='/stations')

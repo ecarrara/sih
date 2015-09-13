@@ -11,7 +11,8 @@ require.config({
 
 require([
     'jquery',
-    'bootstrap'
+    'app/misc/confirm',
+    'bootstrap',
 ], function ($) {
 
     console.log($);
