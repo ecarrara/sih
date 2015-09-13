@@ -12,6 +12,15 @@
             <p class="help-block">{{ error }}</p>
         {% endfor %}
     </div>
+{% elif f.srid %}
+    <div class="form-group geometry-field{% if f.errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
+        {{ f.label(class='control-label') }}
+        {{ f(style='height: 580px') }}
+
+        {%- for error in f.errors %}
+            <p class="help-block">{{ error }}</p>
+        {% endfor %}
+    </div>
 {% else -%}
     <div class="form-group{% if f.errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
         {{ f.label(class='control-label') }}

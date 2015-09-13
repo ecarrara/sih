@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Cadastar Cidade' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="actions-buttons">
+        <a href="{{ url_for('geo.cities_list') }}" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <form method="post" action="{{ url_for('geo.cities_create') }}" class="panel panel-default">
+        <div class="panel-body">
+            {% include 'geo/cities/_form.html' %}
+        </div>
+
+        <div class="panel-footer text-right">
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+        </div>
+    </form>
+{% endblock %}

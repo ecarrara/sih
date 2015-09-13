@@ -6,11 +6,13 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
-from flask import render_template, request
+from flask import render_template, request, flash, url_for, redirect
 from flask_login import login_required
+from sih.extensions import db
 from sih.permissions import role_required
 from sih.modules.geo import geo
 from sih.modules.geo.models import City
+from sih.modules.geo.forms import CityForm
 
 
 @geo.route('/cities')
@@ -29,7 +31,20 @@ def cities_list():
 @login_required
 @role_required(['admin'])
 def cities_create():
-    raise NotImplementedError()
+    form = CityForm()
+
+    if form.validate_on_submit():
+        city = City()
+        form.populate_obj(city)
+
+        db.session.add(city)
+        db.session.commit()
+
+        flash(u'Cidade cadastrada com sucesso.', 'success')
+
+        return redirect(url_for('geo.cities_view', city_id=city.id))
+
+    return render_template('geo/cities/create.html', form=form)
 
 
 @geo.route('/cities/<int:city_id>')
