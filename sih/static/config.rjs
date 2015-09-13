@@ -1,10 +1,17 @@
 ({
     paths: {
         jquery: 'lib/jquery/dist/jquery',
-        bootstrap: 'lib/bootstrap/dist/js/bootstrap'
+        bootstrap: 'lib/bootstrap/dist/js/bootstrap',
+        leaflet: 'lib/leaflet-dist/leaflet',
+        leafletDraw: 'lib/leaflet-draw/dist/leaflet.draw'
     },
     shim: {
-        bootstrap: ['jquery']
+        bootstrap: {
+            deps: ['jquery'],
+        },
+        leafletDraw: {
+            deps: ['leaflet']
+        }
     },
     name: "app/main",
     out: "gen/all.js",
