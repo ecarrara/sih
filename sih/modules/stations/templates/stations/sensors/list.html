@@ -1,0 +1,55 @@
+{% import '_pag.html' as _pag %}
+{% extends 'base.html' %}
+
+{% set page_title = 'Sensores' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="actions-buttons">
+        <a href="{{ url_for('stations.sensors_create') }}" class="btn btn-default">
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Identificador</th>
+                        <th>Unidade de Medida</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sensor in sensors %}
+                        <tr>
+                            <td>{{ sensor.id }}</td>
+                            <td>
+                                <a href="{{ url_for('stations.sensors_view', sensor_id=sensor.id) }}">{{ sensor.name }}</a>
+                            </td>
+                            <td>{{ sensor.identifier }}</td>
+                            <td>{{ sensor.measure_unit }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('stations.sensors_delete', sensor_id=sensor.id) }}" >
+                                    <a href="{{ url_for('stations.sensors_edit', sensor_id=sensor.id) }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-default btn-xs" type="submit" data-confirm="Deseja excluír {{ sensor.name }}?">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}
