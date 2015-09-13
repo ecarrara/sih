@@ -10,3 +10,6 @@ from flask import Blueprint
 
 
 geo = Blueprint('geo', __name__, template_folder='templates')
+
+
+from sih.modules.geo.views.cities import *          # noqa
