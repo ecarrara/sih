@@ -6,6 +6,9 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
+from datetime import datetime
+from geoalchemy2.types import Geography
+from sqlalchemy.dialects.postgresql import ARRAY
 from sih.extensions import db
 
 
@@ -60,3 +63,41 @@ class Sensor(db.Model):
 
         result = ctx.get('result')
         return int(result) if result is not None else None
+
+
+class StationSensor(db.Model):
+
+    __tablename__ = 'stations_sensors'
+    __table_args__ = (
+        db.UniqueConstraint('station_id', 'sensor_id',
+                            name='uq_stations_sensors_station_sensor'),
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    station_id = db.Column(db.Integer, db.ForeignKey('stations.id'),
+                           nullable=False, index=True)
+    sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.id'),
+                          nullable=False, index=True)
+
+
+class Station(db.Model):
+
+    __tablename__ = 'stations'
+
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.String(64), nullable=False, unique=True, index=True)
+    name = db.Column(db.String(256), nullable=False, unique=True, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    installed_at = db.Column(db.DateTime, nullable=True)
+    kind = db.Column(ARRAY(db.String(32)), nullable=False, index=True)
+    description = db.Column(db.Text, nullable=True)
+    source_id = db.Column(db.ForeignKey('sources.id', ondelete='SET NULL'),
+                          nullable=False)
+    location = db.Column(Geography('POINT'), nullable=True, index=True)
+    altitude = db.Column(db.Integer(), nullable=True)
+    interval = db.Column(db.Integer, nullable=False, default=15)
+
+    source = db.relationship('Source')
+    sensors = db.relationship('Sensor', lazy='dynamic',
+                              backref=db.backref('stations', lazy='dynamic'),
+                              secondary=lambda: StationSensor.__table__)
