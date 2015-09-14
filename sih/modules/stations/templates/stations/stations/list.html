@@ -1,0 +1,73 @@
+{% import '_pag.html' as _pag %}
+{% extends 'base.html' %}
+
+{% set page_title = 'Estações' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="actions-buttons btn-group">
+        <a href="{{ url_for('stations.stations_create') }}" class="btn btn-default">
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <form class="form form-inline search-form" action="{{ url_for('stations.stations_list') }}">
+                <label class="text-muted" for="kind">Tipo: </label>
+                <select class="form-control" id="kind" name="kind">
+                    <option value="">Todas</option>
+                    {% for key, value in kinds %}
+                        <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-success"><i class="fa fa-search"></i></button>
+            </form>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cód.</th>
+                        <th>Tipo</th>
+                        <th>Fonte</th>
+                        <th>Lat/Lng</th>
+                        <th>Altitude (m)</th>
+                        <th width="80"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for station in stations.items %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('stations.stations_view', station_id=station.id) }}">
+                                    {{ station.name }}
+                                </a>
+                            </td>
+                            <td>{{ station.code }}</td>
+                            <td>{{ station.kind|join(', ') }}</td>
+                            <td>{{ station.source.name }}</td>
+                            <td>{{ '%.2f, %.2f'|format(station.latlng.x, station.latlng.y) if station.latlng else '' }}</td>
+                            <td>{{ station.altitude or '' }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('stations.stations_delete', station_id=station.id) }}">
+                                    <a href="{{ url_for('stations.stations_edit', station_id=station.id) }}" class="btn btn-xs btn-default">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <button type="submit" class="btn btn-xs btn-default" data-confirm="Deseja excluír {{ station.name }}?">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {{ _pag.render_pagination(stations, request.endpoint, kind=request.args.get('kind')) }}
+
+        </div>
+    </div>
+{% endblock %}

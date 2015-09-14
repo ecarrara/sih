@@ -84,6 +84,14 @@ class Station(db.Model):
 
     __tablename__ = 'stations'
 
+    KINDS = {
+        'pluviometric': u'Pluviométrica',
+        'barrage': u'Barragem',
+        'fluviometric': u'Fluviométrica',
+        'quality': u'Qualidade',
+        'meterologic': u'Meteorológica'
+    }
+
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(64), nullable=False, unique=True, index=True)
     name = db.Column(db.String(256), nullable=False, unique=True, index=True)
