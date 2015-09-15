@@ -2,8 +2,10 @@
 
 <aside id="sidebar">
     {% with menu = [
-        ('Menu', 'fa fa-home', [
-            ('Home', 'home'),
+        ('Estações', 'fa fa-gears', [
+            ('Estações', 'stations.stations_list'),
+            ('Sensores', 'stations.sensors_list'),
+            ('Fontes de Dados', 'stations.sources_list'),
         ]),
         ('Geo', 'fa fa-globe', [
             ('Cidades', 'geo.cities_list'),
