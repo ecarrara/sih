@@ -89,4 +89,11 @@ def stations_edit(station_id):
 @login_required
 @role_required(['admin'])
 def stations_delete(station_id):
-    raise NotImplementedError()
+    station = Station.query.filter(Station.id == station_id).first_or_404()
+
+    flash(u'Estação excluída com sucesso.', 'success')
+
+    db.session.delete(station)
+    db.session.commit()
+
+    return redirect(url_for('stations.stations_list'))
