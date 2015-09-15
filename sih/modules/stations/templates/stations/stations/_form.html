@@ -1,0 +1,17 @@
+{% import '_form.html' as _form %}
+
+{{ _form.render_field(form.csrf_token) }}
+
+{{ _form.render_field(form.name, class='col-sm-6') }}
+{{ _form.render_field(form.source, class='col-sm-3') }}
+{{ _form.render_field(form.code, class='col-sm-3') }}
+
+{{ _form.render_field(form.kind, class='col-sm-3') }}
+{{ _form.render_field(form.installed_at, class='col-sm-3') }}
+{{ _form.render_field(form.interval, class='col-sm-3') }}
+{{ _form.render_field(form.altitude, class='col-sm-3') }}
+
+{{ _form.render_field(form.description, class='col-sm-8') }}
+{{ _form.render_field(form.sensors, class='col-sm-4') }}
+
+{{ _form.render_field(form.location, class='col-md-12') }}

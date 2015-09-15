@@ -6,11 +6,13 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
-from flask import render_template, request
+from flask import render_template, request, flash, url_for, redirect
 from flask_login import login_required
+from sih.extensions import db
 from sih.permissions import role_required
 from sih.modules.stations import stations
 from sih.modules.stations.models import Station
+from sih.modules.stations.forms import StationForm
 
 
 @stations.route('/stations')
@@ -37,7 +39,21 @@ def stations_list():
 @login_required
 @role_required(['admin'])
 def stations_create():
-    raise NotImplementedError()
+    form = StationForm()
+
+    if form.validate_on_submit():
+        station = Station()
+        form.populate_obj(station)
+
+        db.session.add(station)
+        db.session.commit()
+
+        flash(u'Estação cadastrada com sucesso.', 'success')
+
+        return redirect(url_for('stations.stations_view',
+                                station_id=station.id))
+
+    return render_template('stations/stations/create.html', form=form)
 
 
 @stations.route('/stations/<int:station_id>')

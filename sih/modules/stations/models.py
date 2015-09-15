@@ -8,6 +8,7 @@
 
 from datetime import datetime
 from geoalchemy2.types import Geography
+from geoalchemy2.shape import to_shape
 from sqlalchemy.dialects.postgresql import ARRAY
 from sih.extensions import db
 
@@ -109,3 +110,8 @@ class Station(db.Model):
     sensors = db.relationship('Sensor', lazy='dynamic',
                               backref=db.backref('stations', lazy='dynamic'),
                               secondary=lambda: StationSensor.__table__)
+
+    @property
+    def latlng(self):
+        if self.location is not None:
+            return to_shape(self.location)
