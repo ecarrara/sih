@@ -67,7 +67,22 @@ def stations_view(station_id):
 @login_required
 @role_required(['admin'])
 def stations_edit(station_id):
-    raise NotImplementedError()
+    station = Station.query.filter(Station.id == station_id).first_or_404()
+    form = StationForm(obj=station)
+
+    if form.validate_on_submit():
+        form.populate_obj(station)
+
+        db.session.add(station)
+        db.session.commit()
+
+        flash(u'Estação alterada com sucesso.', 'success')
+
+        return redirect(url_for('stations.stations_view',
+                                station_id=station.id))
+
+    return render_template('stations/stations/edit.html',
+                           station=station, form=form)
 
 
 @stations.route('/stations/<int:station_id>/delete', methods=['POST'])
