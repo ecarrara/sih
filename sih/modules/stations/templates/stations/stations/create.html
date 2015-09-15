@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Cadastrar Estação' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="btn-group actions-buttons">
+        <a href="{{ url_for('stations.stations_list') }}" class="btn btn-default" class="Voltar">
+            <span class="fa fa-arrow-left"></span>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <form action="{{ url_for('stations.stations_create') }}" method="post" class="form row">
+                {% include 'stations/stations/_form.html' %}
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success pull-right">Cadastrar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
