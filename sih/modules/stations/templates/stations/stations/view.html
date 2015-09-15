@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Estação: ' + station.name %}
+
+{% block main %}
+    {{ super() }}
+
+    <form method="post" action="{{ url_for('stations.stations_delete', station_id=station.id) }}" class="actions-buttons btn-group">
+        <a href="{{ url_for('stations.stations_list') }}" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <a href="{{ url_for('stations.stations_edit', station_id=station.id) }}" class="btn btn-default">
+            <i class="fa fa-pencil"></i>
+        </a>
+        <button type="submit" class="btn btn-default" data-confirm="Excluír {{ station.name }}?">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="row">
+                <p class="col-md-6">
+                    <strong>Código:</strong> {{ station.code }}<br>
+                    <strong>Fonte dos Dados:</strong> <a href="{{ url_for('stations.stations_view', station_id=station.source.id) }}">{{ station.source.name }}</a><br>
+                    <strong>Data/Hora do Cadastro:</strong> {{ station.created_at.strftime('%d/%m/%Y %H:%M') if station.create_at else '' }}<br>
+                    <strong>Data/Hora da Instalação:</strong> {{ station.installed_at.strftime('%d/%m/%Y %H:%M') if station.installed_at else '' }}<br>
+                    <strong>Descrição:</strong> {{ station.description or '' }}<br>
+                    <strong>Sensores:</strong>
+                    {% for sensor in station.sensors %}
+                        <a href="{{ url_for('stations.sensors_view', sensor_id=sensor.id) }}">{{ sensor.name }} <small>({{ sensor.measure_unit }})</small></a>
+                        {{ ', ' if not loop.last else '' }}
+                    {% endfor %}
+                </p>
+                <div class="col-md-6">
+                    <strong>Tipo:</strong> {{ station.kind|join(', ') }}<br>
+                    <strong>Altitude (m):</strong> {{ station.altitude or '' }}<br>
+                    <strong>Intervalo dos Dados:</strong> {{ station.interval }}min<br>
+                    {% if station.latlng %}
+                        {% with pos = station.latlng %}
+                            <strong>Localização (lat./lng.):</strong> {{ pos.y }}, {{ pos.x }}<br>
+                        {% endwith %}
+                    {% endif %}
+                </p>
+            </div>
+
+            {% if station.latlng %}
+                {% with pos = station.latlng %}
+                    <div class="map medium" data-map data-features='{ "type": "GeometryCollection", "geometries": [{ "type": "Point", "coordinates": [{{ pos.x }}, {{ pos.y }}] }] }' data-center='{ "coordinates": [{{ pos.y }}, {{ pos.x }}], "type": "Point" }' zoom="14"></div>
+                {% endwith %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -60,7 +60,8 @@ def stations_create():
 @login_required
 @role_required(['admin'])
 def stations_view(station_id):
-    raise NotImplementedError()
+    station = Station.query.filter(Station.id == station_id).first_or_404()
+    return render_template('stations/stations/view.html', station=station)
 
 
 @stations.route('/stations/<int:station_id>/edit', methods=['GET', 'POST'])
