@@ -13,6 +13,7 @@ from sih.extensions import db
 from sih.permissions import role_required
 from sih.modules.data import data
 from sih.modules.data.models import Data
+from sih.modules.data.forms import DataForm
 from sih.modules.stations.models import Station
 
 
@@ -45,7 +46,22 @@ def stations_view(station_id):
 @login_required
 @role_required(['admin'])
 def stations_create(station_id):
-    raise NotImplementedError()
+    station = Station.query.filter(Station.id == station_id).first_or_404()
+
+    form = DataForm(station=station)
+    if form.validate_on_submit():
+        data = Data()
+        form.populate_obj(data)
+
+        db.session.add(data)
+        db.session.commit()
+
+        flash(u'Dado cadastrado com sucesso.', 'success')
+
+        return redirect(url_for('data.stations_view', station_id=station.id))
+
+    return render_template('data/stations/create.html',
+                           form=form, station=station)
 
 
 @data.route('/stations/<int:station_id>/<int:data_id>/edit',
