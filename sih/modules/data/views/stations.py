@@ -69,7 +69,23 @@ def stations_create(station_id):
 @login_required
 @role_required(['admin'])
 def stations_edit(station_id, data_id):
-    raise NotImplementedError()
+    data = Data.query \
+               .filter(Data.id == data_id,
+                       Data.station_id == station_id) \
+               .first_or_404()
+
+    form = DataForm(station=data.station, obj=data)
+    if form.validate_on_submit():
+        form.populate_obj(data)
+
+        db.session.add(data)
+        db.session.commit()
+
+        url = url_for('data.stations_view', station_id=data.station.id)
+        return redirect(url)
+
+    return render_template('data/stations/edit.html',
+                           form=form, data=data, station=data.station)
 
 
 @data.route('/stations/<int:station_id>/<int:data_id>/delete',
