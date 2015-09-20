@@ -1,0 +1,10 @@
+{% import '_form.html' as _f %}
+
+<form class="form form-inline datetime-filter-form" method="get">
+    {{ _f.render_field_inline(filter_form.start) }}
+    {{ _f.render_field_inline(filter_form.end) }}
+
+    <button type="submit" class="btn btn-primary"  title="Filtrar">
+        <i class="fa fa-search"></i>
+    </button>
+</form>

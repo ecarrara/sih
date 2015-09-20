@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Estação: ' + station.name %}
+
+{% block main %}
+    {{ super() }}
+
+    <form method="post" action="{{ url_for('stations.stations_delete', station_id=station.id) }}" class="actions-buttons btn-group">
+        <a href="{{ url_for('stations.stations_list') }}" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <a href="{{ url_for('stations.stations_edit', station_id=station.id) }}" class="btn btn-default">
+            <i class="fa fa-pencil"></i>
+        </a>
+        <button type="submit" class="btn btn-default" data-confirm="Excluír {{ station.name }}?">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+
+    <div class="panel panel-default">
+        <ul class="nav nav-tabs panel-tabs" role="tablist">
+            <li role="presentation">
+                <a href="{{ url_for('stations.stations_view', station_id=station.id) }}" role="tab">Informações</a>
+            </li>
+            <li role="presentation">
+                <a href="{{ url_for('data.stations_view', station_id=station.id) }}" role="tab">Dados</a>
+            </li>
+        </ul>
+
+        <div class="panel-body">
+
+            <form action="{{ url_for('data.stations_edit', station_id=station.id, data_id=data.id) }}" method="post" class="form">
+
+                {% include 'data/stations/_form.html' %}
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success pull-right">Salvar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

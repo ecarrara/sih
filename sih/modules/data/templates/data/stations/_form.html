@@ -1,0 +1,23 @@
+{% import '_form.html' as _form %}
+
+{{ _form.render_field(form.csrf_token) }}
+
+<div class="form-group col-sm-8">
+    <label>Estação</label>
+    <input class="form-control" type="text" value="{{ station.name }}" disabled>
+    <input type="hidden" value="{{ station.id }}" name="station" id="station">
+</div>
+
+{{ _form.render_field(form.read_at, class='col-sm-4') }}
+
+<div class="col-md-12">
+    <legend>Sensores</legend>
+    {% for sensor_form in form.sensor_data %}
+        <div class="row">
+            {{ _form.render_field(sensor_form.csrf_token) }}
+            {{ _form.render_field(sensor_form.sensor, class='col-sm-6', readonly='readonly') }}
+            {{ _form.render_field(sensor_form.value, class='col-sm-6') }}
+        </div>
+    {% endfor %}
+</div>
+

@@ -40,4 +40,43 @@
             background: @panel-danger-heading-bg;
         }
     }
+
+    .panel-tabs {
+        background-color: @background-color;
+
+        li {
+            a {
+                border: none !important;
+                padding: 15px 25px;
+                color: #999;
+            }
+
+            &.active {
+                a {
+                    border-right: 1px solid #ddd !important;
+                    border-left: 1px solid #ddd !important;
+                }
+
+                &:first-child {
+                    a {
+                        border-left: none !important;
+                    }
+                }
+            }
+
+        }
+    }
+
+    .panel-body {
+        .datetime-filter-form {
+            float: left;
+        }
+    }
+
+    .panel-footer {
+        .pagination {
+            margin: 0;
+            float: right;
+        }
+    }
 }

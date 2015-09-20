@@ -1,0 +1,79 @@
+{% import '_pag.html' as _pag %}
+{% extends 'base.html' %}
+
+{% set page_title = 'Estação: ' + station.name %}
+
+{% block main %}
+    {{ super() }}
+
+    <form method="post" action="{{ url_for('stations.stations_delete', station_id=station.id) }}" class="actions-buttons btn-group">
+        <a href="{{ url_for('stations.stations_list') }}" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <a href="{{ url_for('stations.stations_edit', station_id=station.id) }}" class="btn btn-default">
+            <i class="fa fa-pencil"></i>
+        </a>
+        <button type="submit" class="btn btn-default" data-confirm="Excluír {{ station.name }}?">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+
+    <div class="panel panel-default">
+        <ul class="nav nav-tabs panel-tabs" role="tablist">
+            <li role="presentation">
+                <a href="{{ url_for('stations.stations_view', station_id=station.id) }}" role="tab">Informações</a>
+            </li>
+            <li role="presentation" class="active">
+                <a href="{{ url_for('data.stations_view', station_id=station.id) }}" role="tab">Dados</a>
+            </li>
+        </ul>
+
+        <div class="panel-body">
+            {% include 'partials/filter_form.html' %}
+
+            <a class="btn btn-success pull-right" href="{{ url_for('data.stations_create', station_id=station.id) }}" title="Cadastrar dado">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+
+        {% with sensors = station.sensors %}
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-center">Data/Hora</th>
+                        {% for sensor in sensors %}
+                            <th class="text-center">{{ sensor.name }} <small>({{ sensor.measure_unit }})</small></th>
+                        {% endfor %}
+                        <th width="80"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for datum in data.items %}
+                        {% with values = datum.values %}
+                            <tr>
+                                <td class="text-center">{{ datum.read_at|datetimeformat }}</td>
+                                {% for sensor in sensors %}
+                                    <td class="text-center">{{ values[sensor.identifier] or '-' }}</td>
+                                {% endfor %}
+                                <td>
+                                    <form action="{{ url_for('data.stations_delete', station_id=station.id, data_id=datum.id) }}" method="post">
+                                        <a class="btn btn-xs btn-default" href="{{ url_for('data.stations_edit', station_id=station.id, data_id=datum.id) }}">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <button type="submit" class="btn btn-xs btn-default" data-confirm="Deseja excluír esse dado?">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endwith %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endwith %}
+
+        <div class="panel-footer clearfix">
+            {{ _pag.render_pagination(data, 'data.stations_view', station_id=station.id) }}
+        </div>
+    </div>
+{% endblock %}

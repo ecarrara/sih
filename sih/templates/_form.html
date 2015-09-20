@@ -12,6 +12,16 @@
             <p class="help-block">{{ error }}</p>
         {% endfor %}
     </div>
+{% elif f.type == 'DateTimeField' %}
+    <div class="form-group{% if f.errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
+        {{ f.label(class='control-label') }}
+        {{- f(type='datetime-local', class='form-control', step=1, **kwargs) }}
+        <div class="text-right"><small class="text-muted">{{ f.description }}</small></div>
+
+        {%- for error in f.errors %}
+            <p class="help-block">{{ error }}</p>
+        {% endfor %}
+    </div>
 {% elif f.srid %}
     <div class="form-group geometry-field{% if f.errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
         {{ f.label(class='control-label') }}
@@ -43,6 +53,15 @@
 {%- elif f.type == 'BooleanField' %}
     <div class="form-group{% if f.errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
         {{- f(placeholder=f.label.text, **kwargs) }}
+        {%- for error in f.errors %}
+            <p class="help-block">{{ error }}</p>
+        {% endfor %}
+    </div>
+{% elif f.type == 'DateTimeField' %}
+    <div class="form-group{% if f.errors %} has-error{% endif %}{% if class %} {{ class }}{% endif %}">
+        {{ f(class='form-control', placeholder=f.label.text, step=1, type='datetime-local', **kwargs) }}
+        <div class="text-right"><small class="text-muted">{{ f.description }}</small></div>
+
         {%- for error in f.errors %}
             <p class="help-block">{{ error }}</p>
         {% endfor %}
