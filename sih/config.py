@@ -12,6 +12,7 @@ from os import getenv
 class BaseConfig(object):
 
     APPLICATION_NAME = 'SIH'
+    SERVER_NAME = 'sih.eco.br'
 
     SQLALCHEMY_DATABASE_URI = getenv('DATABASE_URI', 'postgresql:///sih')
     ASSETS = 'sih/assets.yml'
@@ -24,12 +25,14 @@ class BaseConfig(object):
 
 class DevelopmentConfig(BaseConfig):
 
+    SERVER_NAME = 'sih.dev:5000'
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = getenv('DATABASE_URI', 'postgresql:///sih_dev')
 
 
 class TestingConfig(BaseConfig):
 
+    SERVER_NAME = 'localhost'       # workaround (see http://git.io/vnETx)
     TESTING = True
     SQLALCHEMY_DATABASE_URI = getenv('DATABASE_URI', 'postgresql:///sih_test')
 

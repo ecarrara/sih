@@ -9,7 +9,7 @@
 from flask import Flask, render_template
 from sih.json import JSONEncoder
 from sih.extensions import db, migrate, assets, login_manager, babel
-from sih.modules import users, stations, geo, data
+from sih.modules import users, stations, geo, data, api
 from sih.modules.users.models import User
 
 
@@ -60,3 +60,4 @@ def register_modules(app):
     app.register_blueprint(stations, url_prefix='/stations')
     app.register_blueprint(geo, url_prefix='/geo')
     app.register_blueprint(data, url_prefix='/data')
+    app.register_blueprint(api, subdomain='api')
