@@ -10,6 +10,7 @@ from sih.modules.users import users
 from sih.modules.stations import stations
 from sih.modules.geo import geo
 from sih.modules.data import data
+from sih.modules.api import api
 
 
-__all__ = ['users', 'stations', 'geo', 'data']
+__all__ = ['users', 'stations', 'geo', 'data', 'api']
