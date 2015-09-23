@@ -13,6 +13,7 @@ from sih.modules.users.models import User
 from sih.modules.api.views import ApiView
 from sih.modules.api.resources.station import StationResource
 from sih.modules.api.resources.sensor import SensorResource
+from sih.modules.api.resources.source import SourceResource
 
 
 api = Blueprint('api', __name__)
@@ -62,3 +63,4 @@ def ping():
 
 ApiView.register(api, 'stations', '/stations', StationResource())
 ApiView.register(api, 'sensors', '/sensors', SensorResource())
+ApiView.register(api, 'sources', '/sources', SourceResource())
