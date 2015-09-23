@@ -6,7 +6,6 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
-import jsonschema
 from sqlalchemy.sql.expression import cast
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.types import String
@@ -68,13 +67,6 @@ class StationResource(ApiResource):
         'additionalProperties': False,
         'required': ['name', 'code', 'kind', 'source', 'sensors']
     }
-
-    def validate_data(self, data):
-        try:
-            jsonschema.validate(data, self.schema,
-                                format_checker=jsonschema.FormatChecker())
-        except jsonschema.ValidationError as e:
-            raise ApiError(e.message, 400)
 
     def apply_filters(self, query, filters):
         source = filters.get('source')

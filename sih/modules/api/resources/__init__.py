@@ -6,6 +6,7 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
+import jsonschema
 from sih.extensions import db
 from sih.modules.api.exceptions import ApiError
 
@@ -87,4 +88,9 @@ class ApiResource(object):
         return query
 
     def validate_data(self, data):
-        pass
+        if self.schema:
+            try:
+                jsonschema.validate(data, self.schema,
+                                    format_checker=jsonschema.FormatChecker())
+            except jsonschema.ValidationError as e:
+                raise ApiError(e.message, 400)

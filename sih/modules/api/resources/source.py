@@ -6,9 +6,7 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
-import jsonschema
 from sih.modules.api.resources import ApiResource
-from sih.modules.api.exceptions import ApiError
 from sih.modules.stations.models import Source
 
 
@@ -41,13 +39,6 @@ class SourceResource(ApiResource):
         'additionalProperties': False,
         'required': ['name', 'identifier']
     }
-
-    def validate_data(self, data):
-        try:
-            jsonschema.validate(data, self.schema,
-                                format_checker=jsonschema.FormatChecker())
-        except jsonschema.ValidationError as e:
-            raise ApiError(e.message, 400)
 
     def short_representation(self, obj):
         return {
