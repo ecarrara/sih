@@ -10,7 +10,8 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_user
 from sih.permissions import role_required
 from sih.modules.users.models import User
-from sih.modules.api.views.stations import StationsApi
+from sih.modules.api.views import ApiView
+from sih.modules.api.resources.station import StationResource
 
 
 api = Blueprint('api', __name__)
@@ -56,3 +57,6 @@ def ping():
     return jsonify({
         'pong': True
     })
+
+
+ApiView.register(api, 'stations', '/stations', StationResource())
