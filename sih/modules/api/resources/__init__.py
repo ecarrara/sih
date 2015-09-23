@@ -7,6 +7,7 @@
 """
 
 from sih.extensions import db
+from sih.modules.api.exceptions import ApiError
 
 
 class ApiResource(object):
@@ -46,6 +47,9 @@ class ApiResource(object):
         db.session.commit()
 
     def create_object(self, data):
+        if self.already_exists(data):
+            raise ApiError(u'Already exists', 409)
+
         obj = self.model_class()
 
         self.populate_object(obj, data)
@@ -56,12 +60,28 @@ class ApiResource(object):
         return obj
 
     def edit_object(self, obj, data):
+        if self.already_exists(data, obj):
+            raise ApiError(u'Already exists', 409)
+
         self.populate_object(obj, data)
 
         db.session.add(obj)
         db.session.commit()
 
         return obj
+
+    def already_exists(self, data, current_obj=None):
+        id_column = getattr(self.model_class, self.model_id)
+
+        obj = self.model_class \
+                  .query \
+                  .filter(id_column == data[self.model_id]) \
+                  .first()
+
+        if obj is None:
+            return False
+
+        return obj != current_obj
 
     def apply_filters(self, query, filters):
         return query
