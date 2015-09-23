@@ -60,4 +60,3 @@ class ApiStationsCreateTestCase(TestCase):
         }))
 
         self.assertEquals(response.status_code, 400)
-
