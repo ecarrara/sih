@@ -148,12 +148,6 @@ class StationResource(ApiResource):
             } for sensor in obj.sensors]
         }
 
-    def create_object(self, data):
-        if Station.query.filter(Station.code == data['code']).first():
-            raise ApiError(u'Station already exists', 409)
-
-        return super(StationResource, self).create_object(data)
-
     def populate_object(self, station, data):
         source = Source.query \
                        .filter(Source.identifier == data['source']) \

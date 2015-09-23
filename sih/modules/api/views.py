@@ -93,6 +93,9 @@ class ApiView(View):
     def edit(self, obj_id):
         obj = self.resource.get_object(obj_id)
 
+        if obj is None:
+            raise ApiError('Not found', 404)
+
         data = self.request_data()
         obj = self.resource.edit_object(obj, data)
 
