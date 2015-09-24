@@ -1,6 +1,7 @@
 alembic==0.8.2
 Babel==2.0
 blinker==1.4
+ciso8601==1.0.1
 coverage==3.7.1
 flake8==2.4.1
 Flask==0.10.1
