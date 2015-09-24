@@ -12,7 +12,7 @@ from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.types import String
 from sih.modules.api.exceptions import ApiError
 from sih.modules.api.resources import ApiResource
-from sih.modules.stations.models import Station, Source, Sensor
+from sih.modules.stations.models import Station, Source, Sensor, StationSensor
 from sih.modules.data.models import Data, SensorData
 
 
@@ -21,6 +21,38 @@ class DataResource(ApiResource):
     model_class = Data
     model_id = 'id'
     limit = 500
+    schema = {
+        '$schema': 'http://json-schema.org/draft-04/schema#',
+        'type': 'object',
+        'properties': {
+            'station': {
+                'type': 'string',
+                'pattern': '[-_a-z0-9]+'
+            },
+            'read_at': {
+                'type': 'string',
+                'format': 'date-time'
+            },
+            'values': {
+                'type': 'array',
+                'items': {
+                    'type': 'object',
+                    'properties': {
+                        'sensor': {
+                            'type': 'string',
+                            'pattern': '[-_a-z0-9]+'
+                        },
+                        'value': {
+                            'type': 'integer'
+                        }
+                    },
+                    'required': ['sensor', 'value']
+                }
+            }
+        },
+        'additionalProperties': False,
+        'required': ['read_at', 'station', 'values']
+    }
 
     def short_representation(self, obj):
         return {
@@ -131,3 +163,33 @@ class DataResource(ApiResource):
             query = query.filter(Station.location.ST_CoveredBy(bbox))
 
         return query
+
+    def already_exists(self, data, current_obj=None):
+        return False
+
+    def populate_object(self, obj, data):
+        obj.read_at = DataResource._parse_date(data['read_at'])
+
+        station = Station.query.filter_by(code=data['station']).first()
+        if station is None:
+            raise ApiError('Station {} not found'.format(data['station']), 400)
+
+        obj.station = station
+        obj.sensor_data = []
+
+        for sensor_value in data['values']:
+            sensor_id = sensor_value['sensor']
+            value = sensor_value['value']
+
+            sensor = Sensor.query.join(StationSensor,
+                                       StationSensor.sensor_id == Sensor.id) \
+                                 .filter(Sensor.identifier == sensor_id,
+                                         StationSensor.station_id == station.id) \
+                                 .first()
+            if sensor is None:
+                raise ApiError('Sensor {} not found'.format(sensor_id), 400)
+
+            sensor_data = SensorData(data=obj, sensor=sensor, value=value)
+            obj.sensor_data.append(sensor_data)
+
+        print('ok')
