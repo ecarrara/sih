@@ -90,7 +90,7 @@ class Station(db.Model):
         'barrage': u'Barragem',
         'fluviometric': u'Fluviométrica',
         'quality': u'Qualidade',
-        'meterologic': u'Meteorológica'
+        'meteorologic': u'Meteorológica'
     }
 
     id = db.Column(db.Integer, primary_key=True)
