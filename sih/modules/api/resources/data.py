@@ -174,7 +174,7 @@ class DataResource(ApiResource):
         if station is None:
             raise ApiError('Station {} not found'.format(data['station']), 400)
 
-        obj.station = station
+        obj.station_id = station.id
         obj.sensor_data = []
 
         for sensor_value in data['values']:
@@ -189,7 +189,10 @@ class DataResource(ApiResource):
             if sensor is None:
                 raise ApiError('Sensor {} not found'.format(sensor_id), 400)
 
+            if not sensor.validate_data(value):
+                raise ApiError(
+                    'Invaild value {} for sensor {}'.format(value, sensor_id),
+                    400)
+
             sensor_data = SensorData(data=obj, sensor=sensor, value=value)
             obj.sensor_data.append(sensor_data)
-
-        print('ok')

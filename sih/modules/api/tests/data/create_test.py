@@ -22,7 +22,8 @@ class ApiDataCreateTestCase(TestCase):
 
         source = Source(id=1, name='Test 1', identifier='test1')
         sensor = Sensor(id=1, identifier='test', name='Test',
-                        measure_unit='mm')
+                        measure_unit='mm',
+                        validate_code='result = value > 0')
 
         station = Station(name='Test 1',
                           code='test1',
@@ -51,3 +52,21 @@ class ApiDataCreateTestCase(TestCase):
         self.assertEquals(response.status_code, 201)
 
         self.assertEquals(Data.query.count(), 1)
+
+    def test_api_data_invalid_sensor_value(self):
+        url = url_for('api.data')
+
+        response = self.client.post(url, headers={
+            'Authorization': basic_auth('admin', 'secret'),
+            'Content-Type': 'application/json'
+        }, data=json.dumps({
+            'read_at': '2015-09-23T22:04:51+03:00',
+            'station': 'test1',
+            'values': [{
+                'sensor': 'test',
+                'value': -2
+            }]
+        }))
+
+        self.assertEquals(response.status_code, 400)
+        self.assertEquals(Data.query.count(), 0)
