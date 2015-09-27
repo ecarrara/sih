@@ -71,3 +71,8 @@ class Basin(db.Model):
 
     ottocode = db.Column(db.String(12), primary_key=True)
     boundary = db.Column(Geography('POLYGON'), index=True)
+
+    @property
+    def boundary_shape(self):
+        if self.boundary is not None:
+            return to_shape(self.boundary)

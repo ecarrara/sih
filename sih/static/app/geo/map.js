@@ -1,7 +1,8 @@
 define([
     'jquery',
-    'leaflet'
-], function ($, L) {
+    'leaflet',
+    'underscore'
+], function ($, L, _) {
 
     var defaults = {
         baselayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -14,6 +15,8 @@ define([
             center = $el.attr('data-center'),
             zoom = $el.attr('zoom'),
             baselayer = $el.attr('data-baselayer'),
+            style = $el.attr('data-style'),
+            popup = $el.attr('data-popup'),
             features = $el.attr('data-features');
 
         if (center) {
@@ -30,14 +33,29 @@ define([
         var map = L.map(el, {
             layers: [layer],
             zoom: zoom || defaults.zoom,
-            center: center.coordinates || defaults.center
+            center: center.coordinates.reverse() || defaults.center
         });
 
         el.map = map;
 
+        if (popup) {
+            var popupTmpl = _.template($('#' + popup).html())
+        }
+
+        if (style) {
+            style = $.parseJSON(style)
+        }
+
         if (features) {
             features = $.parseJSON(features);
-            el.features = L.geoJson(features);
+            el.features = L.geoJson(features, {
+                style: style,
+                onEachFeature: function (feature, layer) {
+                    if (popupTmpl) {
+                        layer.bindPopup(popupTmpl(feature.properties));
+                    }
+                }
+            });
             el.features.addTo(map);
         }
 
