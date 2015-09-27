@@ -75,4 +75,11 @@ def basins_edit(basin_id):
 @login_required
 @role_required(['admin'])
 def basins_delete(basin_id):
-    raise NotImplementedError()
+    basin = Basin.query.filter(Basin.ottocode == basin_id).first_or_404()
+
+    db.session.delete(basin)
+    db.session.commit()
+
+    flash(u'Bacia excluída com sucesso.', 'success')
+
+    return redirect(url_for('geo.basins_list'))
