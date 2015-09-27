@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Editar Bacia: #' + basin.ottocode %}
+
+{% block main %}
+    {{ super() }}
+
+    <form method="post" action="{{ url_for('geo.basins_delete', basin_id=basin.ottocode) }}" class="actions-buttons btn-group">
+        <a href="{{ url_for('geo.basins_list') }}" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <a href="{{ url_for('geo.basins_view', basin_id=basin.ottocode) }}" class="btn btn-default">
+            <i class="fa fa-search"></i>
+        </a>
+        <button type="submit" class="btn btn-default" data-confirm="excluír {{ basin.name }}?">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+
+    <form method="post" action="{{ url_for('geo.basins_edit', basin_id=basin.ottocode) }}" class="panel panel-default">
+        <div class="panel-body">
+            {% include 'geo/basins/_form.html' %}
+        </div>
+
+        <div class="panel-footer text-right">
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </div>
+    </form>
+{% endblock %}

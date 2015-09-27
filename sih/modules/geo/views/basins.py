@@ -55,7 +55,20 @@ def basins_view(basin_id):
 @login_required
 @role_required(['admin'])
 def basins_edit(basin_id):
-    raise NotImplementedError()
+    basin = Basin.query.filter(Basin.ottocode == basin_id).first_or_404()
+
+    form = BasinForm(obj=basin)
+    if form.validate_on_submit():
+        form.populate_obj(basin)
+
+        db.session.add(basin)
+        db.session.commit()
+
+        flash(u'Bacia editada com sucesso.', 'success')
+
+        return redirect(url_for('geo.basins_view', basin_id=basin.ottocode))
+
+    return render_template('geo/basins/edit.html', basin=basin, form=form)
 
 
 @geo.route('/basins/<basin_id>/delete', methods=['POST'])
