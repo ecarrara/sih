@@ -10,7 +10,7 @@ from flask_wtf import Form
 from wtforms.fields import TextField, IntegerField, SelectField
 from wtforms.validators import DataRequired, ValidationError
 from wtforms_geo.fields import PolygonField
-from sih.modules.geo.models import STATES, City
+from sih.modules.geo.models import STATES, City, Basin
 
 
 class CityForm(Form):
@@ -30,4 +30,22 @@ class CityForm(Form):
 
         city = City.query.filter(City.id == field.data).first()
         if city:
+            raise ValidationError(u'Código já registrado.')
+
+
+class BasinForm(Form):
+
+    ottocode = TextField(u'Código', validators=[DataRequired()])
+    boundary = PolygonField(u'Limites')
+
+    def __init__(self, obj=None, **kwargs):
+        super(BasinForm, self).__init__(obj=obj, **kwargs)
+        self.obj = obj
+
+    def validate_ottocode(self, field):
+        if self.obj and field.data == self.obj.ottocode:
+            return
+
+        basin = Basin.query.filter(Basin.ottocode == field.data).first()
+        if basin:
             raise ValidationError(u'Código já registrado.')
