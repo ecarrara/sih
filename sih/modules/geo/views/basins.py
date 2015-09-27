@@ -47,7 +47,8 @@ def basins_create():
 @login_required
 @role_required(['admin'])
 def basins_view(basin_id):
-    raise NotImplementedError()
+    basin = Basin.query.filter(Basin.ottocode == basin_id).first_or_404()
+    return render_template('geo/basins/view.html', basin=basin)
 
 
 @geo.route('/basins/<basin_id>/edit', methods=['GET', 'POST'])
