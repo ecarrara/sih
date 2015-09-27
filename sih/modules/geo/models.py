@@ -63,3 +63,11 @@ class City(db.Model):
     def center_shape(self):
         if self.center is not None:
             return to_shape(self.center)
+
+
+class Basin(db.Model):
+
+    __tablename__ = 'basins'
+
+    ottocode = db.Column(db.String(12), primary_key=True)
+    boundary = db.Column(Geography('POLYGON'), index=True)
