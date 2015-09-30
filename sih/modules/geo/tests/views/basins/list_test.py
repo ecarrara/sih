@@ -19,7 +19,7 @@ class BasinsListTestCase(TestCase):
         super(BasinsListTestCase, self).setUp()
 
         basin1 = Basin(ottocode='1',
-                       boundary=WKTElement('POLYGON ((0 0, 1 1, 1 2, 0 0))'))
+                       boundary=WKTElement('POLYGON ((1 1, 2 1, 1 2, 1 1))'))
         basin2 = Basin(ottocode='2',
                        boundary=WKTElement('POLYGON ((1 1, 2 2, 3 4, 1 1))'))
 

@@ -25,6 +25,14 @@
         </ul>
 
         <div class="panel-body">
+            <div class="row">
+                <p class="col-md-4">
+                    <strong>Área:</strong> {{ '%.2f'|format(basin.area / 100000) }} km²<br>
+                    <strong>Perímetro:</strong> {{ '%.2f'|format(basin.perimeter / 100000) }} km²<br>
+                    <strong>Índice de Compacidade:</strong> {{ '%.2f'|format(basin.compactness_index) }}
+                </p>
+            </div>
+
             {% if basin.boundary is not none %}
                 <div class="map medium"
                      data-map

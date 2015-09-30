@@ -19,7 +19,7 @@ class BasinsViewTestCase(TestCase):
         super(BasinsViewTestCase, self).setUp()
 
         basin = Basin(ottocode='1',
-                      boundary=WKTElement('POLYGON ((0 0, 1 1, 1 2, 0 0))'))
+                      boundary=WKTElement('POLYGON ((1 1, 2 1, 1 2, 1 1))'))
 
         db.session.add(basin)
 
