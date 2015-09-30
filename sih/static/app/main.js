@@ -2,6 +2,7 @@ require.config({
     baseUrl: '/static',
     paths: {
         jquery: 'lib/jquery/dist/jquery',
+        underscore: 'lib/underscore/underscore',
         bootstrap: 'lib/bootstrap/dist/js/bootstrap',
         leaflet: 'lib/leaflet-dist/leaflet',
         leafletDraw: 'lib/leaflet-draw/dist/leaflet.draw'

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Bacias' %}
+
+{% block main %}
+    {{ super() }}
+
+    <div class="actions-buttons">
+        <a href="{{ url_for('geo.basins_create') }}" class="btn btn-default">
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="map large" data-map data-features='{ "type": "FeatureCollection", "features": [
+                {%- for basin in basins -%}
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "ottocode": "{{ basin.ottocode }}"
+                        },
+                        "geometry": {{ basin.boundary_shape|tojson }}
+                    }{%- if not loop.last -%},{%- endif -%}
+                {%- endfor -%}
+                ] }'
+                 data-center='{"coordinates": [-48, -23], "type": "Point"}'
+                 zoom="7"
+                 data-style='{ "color": "#5555aa", "weight": 1 }'
+                 data-popup="basin-popup-tmpl"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/x-template" id="basin-popup-tmpl">
+        <h4>#<%= ottocode %></h4>
+        <a class="btn btn-sm btn-default" href="/geo/basins/<%= ottocode %>">
+            <i class="fa fa-search"></i>
+        </a>
+        <a class="btn btn-sm btn-default" href="/geo/basins/<%= ottocode %>/edit">
+            <i class="fa fa-pencil"></i>
+        </a>
+    </script>
+{% endblock %}

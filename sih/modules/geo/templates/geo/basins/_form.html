@@ -1,0 +1,11 @@
+{% import '_form.html' as _f %}
+
+{{ _f.render_field(form.csrf_token) }}
+
+<div class="row">
+    {{ _f.render_field(form.ottocode, class='col-md-4') }}
+</div>
+
+<div class="row">
+    {{ _f.render_field(form.boundary, class='col-md-12') }}
+</div>

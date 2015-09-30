@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% set page_title = 'Bacia: #' + basin.ottocode %}
+
+{% block main %}
+    {{ super() }}
+
+    <form method="post" action="{{ url_for('geo.basins_delete', basin_id=basin.ottocode) }}" class="actions-buttons btn-group">
+        <a href="{{ url_for('geo.basins_list') }}" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <a href="{{ url_for('geo.basins_edit', basin_id=basin.ottocode) }}" class="btn btn-default">
+            <i class="fa fa-pencil"></i>
+        </a>
+        <button type="submit" class="btn btn-default" data-confirm="Excluír {{ basin.name }}?">
+            <i class="fa fa-trash"></i>
+        </button>
+    </form>
+
+    <div class="panel panel-default">
+        <ul class="nav nav-tabs panel-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="{{ url_for('geo.basins_view', basin_id=basin.ottocode) }}" role="tab">Informações</a>
+            </li>
+        </ul>
+
+        <div class="panel-body">
+            <div class="row">
+                <p class="col-md-4">
+                    <strong>Área:</strong> {{ '%.2f'|format(basin.area / 100000) }} km²<br>
+                    <strong>Perímetro:</strong> {{ '%.2f'|format(basin.perimeter / 100000) }} km²<br>
+                    <strong>Índice de Compacidade:</strong> {{ '%.2f'|format(basin.compactness_index) }}
+                </p>
+            </div>
+
+            {% if basin.boundary is not none %}
+                <div class="map medium"
+                     data-map
+                     zoom="10"
+                     data-features='{ "type": "FeatureCollection", "features": [{{ basin.boundary_shape|tojson }}] }' data-center='{{ basin.boundary_shape.centroid|tojson }}'
+                     data-style='{ "color": "#5555aa", "weight": 1 }'></div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

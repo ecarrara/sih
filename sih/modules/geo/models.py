@@ -6,6 +6,9 @@
     :copyright: (c) 2015 by Erle Carrara.
 """
 
+from math import pi
+from sqlalchemy import func
+from sqlalchemy.orm import column_property
 from geoalchemy2.types import Geography
 from geoalchemy2.shape import to_shape
 from sih.extensions import db
@@ -63,3 +66,21 @@ class City(db.Model):
     def center_shape(self):
         if self.center is not None:
             return to_shape(self.center)
+
+
+class Basin(db.Model):
+
+    __tablename__ = 'basins'
+
+    ottocode = db.Column(db.String(12), primary_key=True)
+    boundary = db.Column(Geography('POLYGON'), index=True)
+    area = column_property(boundary.ST_Area())
+    perimeter = column_property(boundary.ST_Perimeter())
+    compactness_index = column_property(
+        boundary.ST_Perimeter() * 0.282 /
+        func.nullif(func.sqrt(boundary.ST_Area()), 0))
+
+    @property
+    def boundary_shape(self):
+        if self.boundary is not None:
+            return to_shape(self.boundary)

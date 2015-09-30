@@ -13,3 +13,4 @@ geo = Blueprint('geo', __name__, template_folder='templates')
 
 
 from sih.modules.geo.views.cities import *          # noqa
+from sih.modules.geo.views.basins import *          # noqa
