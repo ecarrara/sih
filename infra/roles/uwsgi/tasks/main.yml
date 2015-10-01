@@ -1,0 +1,24 @@
+---
+
+- name: install dependencies
+  apt: name={{ item }} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - python-pip
+    - python-dev
+
+- name: install uwsgi
+  pip: name=uwsgi state=present
+
+- name: create uwsgi log directory
+  file: state=directory dest=/var/log/uwsgi
+
+- name: create uwsgi config directory
+  file: state=directory dest=/etc/uwsgi
+
+- name: create uwsgi upstart service
+  copy: src=uwsgi.service dest=/etc/init/uwsgi.conf
+  notify:
+    - restart uwsgi
+
+- name: ensure uwsgi is enabled and running
+  service: name=uwsgi enabled=yes state=started
