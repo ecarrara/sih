@@ -4,3 +4,7 @@
   roles:
     - { role: common, tags: [common] }
     - { role: nginx, tags: [nginx] }
+
+- hosts: dbservers
+  roles:
+   - { role: postgresql, tags: [postgresql] }

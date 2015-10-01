@@ -1,0 +1,30 @@
+---
+
+- name: add postgresql apt repository key
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+- name: add postgresql apt repository
+  apt_repository: >
+    repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main'
+    state=present
+    update_cache=yes
+
+- name: install postgresql
+  apt: >
+    name=postgresql-{{ postgresql_version }}
+    state=installed
+    update_cache=yes
+    cache_valid_time=3600
+
+- name: install postgis
+  apt: >
+    name=postgresql-{{ postgresql_version }}-postgis-{{ postgis_version }}
+    state=installed
+    update_cache=yes
+    cache_valid_time=3600
+
+- name: install python-psycopg2
+  apt: name=python-psycopg2 state=installed update_cache=yes cache_valid_time=3600
+
+- name: ensure postgresql is enabled running
+  service: name=postgresql enabled=yes state=started
