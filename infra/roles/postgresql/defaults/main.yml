@@ -1,0 +1,4 @@
+---
+
+postgresql_version: 9.4
+postgis_version: 2.1

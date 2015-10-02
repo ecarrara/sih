@@ -1,0 +1,15 @@
+---
+
+- name: install ufw
+  apt: name=ufw state=installed
+
+- name: allow ssh connections
+  ufw: rule=allow name=OpenSSH
+  notify:
+    - reload ufw
+
+- name: ensure ufw is enabled
+  ufw: state=enabled
+
+- name: ensure ufw service is enabled and running
+  service: name=ufw enabled=yes state=started

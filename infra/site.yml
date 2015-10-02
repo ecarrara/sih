@@ -1,0 +1,10 @@
+---
+
+- hosts: appservers
+  roles:
+    - { role: common, tags: [common] }
+    - { role: app, tags: [app] }
+
+- hosts: dbservers
+  roles:
+   - { role: postgresql, tags: [postgresql] }

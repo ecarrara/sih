@@ -1,0 +1,22 @@
+server {
+    listen       80;
+    server_name  {{ inventory_hostname }};
+
+    root {{ app_dir }};
+
+    client_max_body_size 16M;
+    uwsgi_read_timeout 30s;
+    proxy_connect_timeout  30s;
+    proxy_send_timeout  30s;
+    proxy_read_timeout  30s;
+
+    gzip on;
+    gzip_comp_level 5;
+    gzip_types text/plain text/css application/json text/javascript;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:///var/run/{{ app_name }}.socket;
+        uwsgi_read_timeout 60;
+    }
+}

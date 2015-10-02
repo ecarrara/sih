@@ -1,0 +1,53 @@
+---
+
+- name: fetch latest application release
+  become: yes
+  become_user: "{{ app_user }}"
+  git: >
+    repo={{ app_repo }}
+    dest={{ app_dir }}
+    version={{ app_version }}
+    depth=1
+  ignore_errors: yes
+  notify:
+    - reload application
+
+- name: install requirements
+  become: yes
+  become_user: "{{ app_user }}"
+  pip: >
+    virtualenv={{ app_venv }}
+    requirements={{ app_dir }}/requirements.txt
+  notify:
+    - reload application
+
+- name: install static assets
+  become: yes
+  become_user: "{{ app_user }}"
+  command: >
+    chdir={{ app_dir }}
+    bower --config.interactive=false install
+
+- name: compress javascript
+  become: yes
+  become_user: "{{ app_user }}"
+  command: >
+    chdir={{ app_dir }}/{{ app_name }}/static
+    r.js -o config.rjs
+
+- name: compress stylesheets
+  become: yes
+  become_user: "{{ app_user }}"
+  command: >
+    chdir={{ app_dir }}/{{ app_name }}/static
+    lessc app/styles/main.less > gen/all.css
+
+
+- name: upgrade database
+  become: yes
+  become_user: "{{ app_user }}"
+  run_once: yes
+  shell: >
+    chdir={{ app_dir }}
+    {{ app_name|upper }}_CONFIG=/home/{{ app_user }}/production_config.py \
+    {{ app_venv }}/bin/python ./manage.py db upgrade

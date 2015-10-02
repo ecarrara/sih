@@ -1,0 +1,20 @@
+[uwsgi]
+enable-threads = true
+chown-socket = {{ app_user }}:www-data
+chmod-socket = 770
+uid = {{ app_user }}
+gid = www-data
+vhost = true
+venv = {{ app_venv }}
+chdir = {{ app_dir }}
+module = deploy
+callable = app
+env = {{ app_name|upper }}_CONFIG=/home/{{ app_user }}/production_config.py
+socket = /var/run/{{ app_name }}.socket
+pidfile = /var/run/{{ app_name }}.pid
+logto = /var/log/uwsgi/{{ app_name }}.log
+disable-logging = true
+log-5xx = true
+log-slow = 500
+plugins = python2
+workers = {{ app_workers }}

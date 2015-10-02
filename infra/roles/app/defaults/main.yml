@@ -1,0 +1,21 @@
+---
+
+app_name: sih
+
+app_admins:
+  - 'Erle Carrara <erle.carrara@fatec.sp.gov.br>'
+
+app_user: sih
+
+app_workers: 2
+
+app_repo: git@github.com:ecarrara/sih.git
+app_repo_host: github.com
+app_version: master
+
+app_venv: /home/{{ app_user }}/venv
+app_dir: /home/{{ app_user }}/{{ app_name }}
+
+app_db_name: sih
+app_db_user: sih
+app_db_host: localhost
