@@ -1,0 +1,22 @@
+---
+
+- name: install packages
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
+  with_items:
+    - git
+    - python-dev
+    - python-pip
+    - python-virtualenv
+    - libpq-dev
+    - nodejs
+    - npm
+
+- name: fix link [/usr/bin/nodejs -> /usr/bin/node]
+  command: creates=/usr/bin/node ln -s /usr/bin/nodejs /usr/bin/node
+
+- name: install less, requirejs and bower
+  npm: name={{ item }} global=yes state=present
+  with_items:
+    - less
+    - requirejs
+    - bower

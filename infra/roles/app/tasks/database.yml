@@ -1,0 +1,14 @@
+---
+
+- name: create database user
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: >
+    name={{ app_db_user }}
+    login_password={{ secret_key }}
+    role_attr_flags=SUPERUSER
+
+- name: create database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{ app_db_name }} owner={{ app_db_user }} encoding='UTF-8'

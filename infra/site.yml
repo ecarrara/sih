@@ -3,8 +3,7 @@
 - hosts: appservers
   roles:
     - { role: common, tags: [common] }
-    - { role: nginx, tags: [nginx] }
-    - { role: uwsgi, tags: [uwsgi] }
+    - { role: app, tags: [app] }
 
 - hosts: dbservers
   roles:

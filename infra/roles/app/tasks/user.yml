@@ -1,0 +1,33 @@
+---
+
+- name: create application user
+  user: createhome=yes state=present name={{ app_user }}
+
+- name: set user directory owner
+  file: >
+    owner={{ app_user }}
+    group={{ app_user }}
+    path=/home/{{ app_user }}
+    recurse=yes
+
+- name: create .ssh directory
+  file: >
+    state=directory
+    dest=/home/{{ app_user }}/.ssh
+    owner={{ app_user }}
+    group={{ app_user }}
+    mode=755
+
+- name: install deploy key
+  copy: content="{{ deploy_key }}" dest=/home/{{ app_user }}/.ssh/id_rsa
+
+- name: set ssh key permission
+  file: mode=0600 path=/home/{{ app_user }}/.ssh/id_rsa
+
+- name: ensure repository is a known host
+  lineinfile:
+    dest: /home/{{ app_user }}/.ssh/known_hosts
+    create: yes
+    state: present
+    line: "{{ lookup('pipe', 'ssh-keyscan -t rsa ' + app_repo_host) }}"
+    regexp: "^{{ app_repo_host|replace('.', '\\.') }}"

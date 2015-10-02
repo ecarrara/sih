@@ -1,0 +1,4 @@
+---
+
+- name: reload application
+  command: touch /etc/uwsgi/{{ app_name }}.ini

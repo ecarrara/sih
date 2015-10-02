@@ -1,0 +1,22 @@
+---
+
+- name: app production config
+  sudo: yes
+  sudo_user: "{{ app_user }}"
+  template:
+    src: production_config.py.j2
+    dest: /home/{{ app_user }}/production_config.py
+  notify:
+    - reload application
+
+- name: create uwsgi configuration file
+  template: src=uwsgi.ini.j2 dest=/etc/uwsgi/{{ app_name }}.ini
+  notify:
+    - restart uwsgi
+
+- name: nginx application configuration
+  template:
+    src: app_nginx.conf.j2
+    dest: /etc/nginx/apps.d/app.conf
+  notify:
+    - restart nginx

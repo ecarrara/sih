@@ -38,3 +38,7 @@ class TestingConfig(BaseConfig):
 
     WTF_CSRF_ENABLED = False
     LOGIN_DISABLED = True
+
+
+class ProductionConfig(BaseConfig):
+    pass
