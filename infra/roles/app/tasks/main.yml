@@ -4,3 +4,4 @@
 - include: user.yml tags=app-user
 - include: database.yml tags=app-database
 - include: server.yml tags=app-server
+- include: deploy.yml tags=app-deploy
