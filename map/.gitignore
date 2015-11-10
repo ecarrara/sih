@@ -1,0 +1,3 @@
+mapnik.xml
+layers/**/*.TIF
+*.log

@@ -1,0 +1,61 @@
+---
+
+services:
+  demo:
+  kml:
+    use_grid_names: true
+  tms:
+    use_grid_names: true
+    origin: 'nw'
+  wmts:
+    restful: true
+  wms:
+    srs: ['EPSG:900913','EPSG:3857']
+    image_formats: ['image/png']
+    md:
+      title: SIH Mapas
+      abstract: Mapas usados no projeto SIH (http://sih.eco.br)
+      contact:
+          person: Erle Carrara
+          position: Student
+          organization: FATEC-SJC
+          address: Av. Cesare Monsueto Giulio Lattes, s/n
+          city: São José dos Campos
+          postcode: 12247-014
+          country: Brasil
+          email: erle.carrara@fatec.sp.gov.br
+          access_constraints:
+              The data is licensed as Creative Commons
+              Attribution-NonCommercial-ShareAlike 4.0 International License
+              (http://creativecommons.org/licenses/by-nc-sa/4.0/).
+          fees: 'None'
+
+
+layers:
+  - name: landsat8
+    title: Landsat 8
+    sources: [landsat8]
+
+caches:
+  landsat8:
+    grids: [webmercator]
+    sources: [landsat8]
+
+sources:
+  landsat8:
+    type: mapnik
+    mapfile: ../mapnik.xml
+    transparent: true
+
+grids:
+  webmercator:
+    srs: EPSG:3857
+    origin: nw
+    bbox_srs: EPSG:4326
+    bbox: "-54.9536,-29.9359,-47.6037,-24.9363"
+
+globals:
+  image:
+    resampling_method: bilinear
+  cache:
+    base_dir: /var/cache/mapproxy

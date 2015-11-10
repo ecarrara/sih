@@ -1,0 +1,16 @@
+---
+
+seeds:
+  landsat8_seed:
+    caches: [landsat8]
+    grids: [webmercator]
+    levels:
+      to: 10
+    refresh_before:
+      weeks: 4
+
+cleanups:
+  landsat8_cleanup:
+    caches: [landsat8]
+    remove_before:
+      weeks: 4
