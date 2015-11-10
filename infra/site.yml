@@ -8,3 +8,8 @@
 - hosts: dbservers
   roles:
    - { role: postgresql, tags: [postgresql] }
+
+- hosts: mapservers
+  roles:
+    - { role: common, tags: [common] }
+    - { role: mapproxy, tags: [mapproxy] }
