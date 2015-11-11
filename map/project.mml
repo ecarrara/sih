@@ -1,0 +1,208 @@
+{
+  "bounds": [
+    -54.9536,
+    -29.9359,
+    -47.6037,
+    -24.9363
+  ],
+  "center": [
+    -49.6437,
+    -27.2107,
+    11
+  ],
+  "format": "png8",
+  "interactivity": false,
+  "minzoom": 8,
+  "maxzoom": 14,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "style.mss"
+  ],
+  "Layer": [
+    {
+      "geometry": "raster",
+      "extent": [
+        -52.29392454120689,
+        -27.820725146788263,
+        -48.22347602062694,
+        -24.13596359446669
+      ],
+      "id": "lc82210782014213lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82210782014213LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82210782014213lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -53.782080853000686,
+        -31.083029709627034,
+        -46.050329155682654,
+        -23.722761867995587
+      ],
+      "id": "lc82210792015056lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82210792015056LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82210792015056lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -53.20464885850118,
+        -29.886837907535515,
+        -45.947729202649455,
+        -23.43476861050217
+      ],
+      "id": "lc82200782015241lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82200782015241LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82200782015241lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -51.17529781755597,
+        -29.30019248520618,
+        -46.96256194953736,
+        -25.53573628718657
+      ],
+      "id": "lc82200792014238lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82200792014238LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82200792014238lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -54.90388469238292,
+        -31.431628286174,
+        -46.05034791844146,
+        -23.322629400229182
+      ],
+      "id": "lc82220782015271lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82220782015271LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82220782015271lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -55.223984291904976,
+        -31.52661454188696,
+        -46.0504411036143,
+        -23.20913243959381
+      ],
+      "id": "lc82220792015255lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82220792015255LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82220792015255lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -56.36274343893016,
+        -31.848865488963522,
+        -46.050219644318496,
+        -22.808451699541987
+      ],
+      "id": "lc82230782015118lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82230782015118LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82230782015118lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -56.66706057635095,
+        -31.93071849919587,
+        -46.050354952705334,
+        -22.702262651278023
+      ],
+      "id": "lc82230792015118lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82230792015118LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82230792015118lgn0"
+    },
+    {
+      "geometry": "raster",
+      "extent": [
+        -53.443254046618705,
+        -30.972906620626162,
+        -46.05024856664985,
+        -23.84422674061158
+      ],
+      "id": "lc82200802015257lgn0",
+      "class": "truecolor",
+      "Datasource": {
+        "file": "layers/landsat8/LC82200802015257LGN00_RGBA_EPSG3857.TIF",
+        "type": "gdal"
+      },
+      "layer": null,
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "lc82200802015257lgn0"
+    }
+  ],
+  "scale": 1,
+  "metatile": 2,
+  "name": "",
+  "description": "SIH Mapas",
+  "attribution": ""
+}

@@ -1,0 +1,17 @@
+[uwsgi]
+enable-threads = true
+chown-socket = {{ mapproxy_user }}:www-data
+chmod-socket = 770
+uid = {{ mapproxy_user }}
+gid = www-data
+vhost = true
+chdir = {{ mapproxy_dir }}
+wsgi-file = {{ mapproxy_dir }}/uwsgi.py
+socket = /var/run/mapproxy.socket
+pidfile = /var/run/mapproxy.pid
+logto = /var/log/uwsgi/mapproxy.log
+disable-logging = true
+log-5xx = true
+log-slow = 500
+plugins = python2
+workers = {{ mapproxy_workers }}

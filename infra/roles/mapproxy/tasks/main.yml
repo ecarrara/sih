@@ -1,0 +1,44 @@
+---
+
+- name: install mapproxy dependencies
+  apt: name={{ item }} state=installed
+  with_items:
+    - libproj0
+    - libgdal-dev
+    - libgeos-dev
+    - libproj-dev
+    - libxml2-dev
+    - libxslt1-dev
+
+- name: install mapproxy (and dependencies)
+  pip: name={{ item }} state=latest
+  with_items:
+    - mapproxy
+    - lxml
+    - pyyaml
+    - pillow
+    - shapely
+    - mapnik
+
+- name: create mapproxy cache directory
+  file: path=/var/cache/mapproxy state=directory owner={{ mapproxy_user }}
+
+- name: install cartocss
+  npm: name=carto state=present production=yes global=yes
+
+- name: generate mapnik.xml (carto)
+  shell: carto {{ mapproxy_dir }}/project.mml > {{ mapproxy_dir }}/mapnik.xml
+  notify:
+    - restart uwsgi
+
+- name: mapproxy uwsgi configuration file
+  template: src=uwsgi.ini.j2 dest=/etc/uwsgi/mapproxy.ini
+  notify:
+    - restart uwsgi
+
+- name: mapproxy nginx configuration
+  template:
+    src: mapproxy_nginx.conf.j2
+    dest: /etc/nginx/apps.d/mapproxy.conf
+  notify:
+    - restart nginx

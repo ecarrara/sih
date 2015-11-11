@@ -1,0 +1,5 @@
+---
+
+mapproxy_user: sih
+mapproxy_dir: /home/sih/sih/map
+mapproxy_workers: 2
